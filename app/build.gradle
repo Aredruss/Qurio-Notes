@@ -1,0 +1,84 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'io.gitlab.arturbosch.detekt'
+}
+
+android {
+    compileSdk 30
+
+    defaultConfig {
+        applicationId "com.aredruss.qurio"
+        minSdk 23
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    detekt {
+        toolVersion = "1.16.0"
+        input = files("src/main/java")
+        parallel = true
+        config = files("${project.rootDir}/detekt.yml")
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+ext {
+    room_version = "2.3.0"
+    lifecycle_version = "2.3.1"
+    koin_version = "2.2.3"
+    material_version = "1.4.0"
+    okhttp_version = "4.9.1"
+}
+
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation "com.google.android.material:material:$material_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.databinding:viewbinding:7.0.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-paging:2.4.0-alpha04"
+
+    // Nav
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    def koin_version = '3.1.2'
+    implementation "io.insert-koin:koin-android:$koin_version"
+
+    def lifecycle_version = '2.3.1'
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+}
