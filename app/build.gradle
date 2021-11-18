@@ -1,13 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
     id 'kotlin-android-extensions'
     id 'androidx.navigation.safeargs.kotlin'
     id 'io.gitlab.arturbosch.detekt'
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.aredruss.qurio"
@@ -69,7 +70,8 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-paging:2.4.0-alpha04"
+    implementation "androidx.room:room-paging:2.4.0-beta02"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
     // Nav
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

@@ -2,20 +2,27 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
+    xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.aredruss.qurio.view.home.HomeFragment"
-        android:label="HomeFragment" >
+        tools:layout="@layout/fragment_home"
+        android:name="com.aredruss.qurio.view.notes.HomeFragment"
+        android:label="HomeFragment">
         <action
             android:id="@+id/home_to_note"
             app:destination="@id/noteFragment" />
     </fragment>
+
     <fragment
+        tools:layout="@layout/fragment_note"
         android:id="@+id/noteFragment"
-        android:name="com.aredruss.qurio.view.note.NoteFragment"
+        android:name="com.aredruss.qurio.view.notes.NoteFragment"
         android:label="NoteFragment">
-        <argument android:name="note" app:nullable="true" app:argType="com.aredruss.qurio.models.Note"/>
+        <argument
+            android:name="note"
+            app:argType="com.aredruss.qurio.model.Note"
+            app:nullable="true" />
     </fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package com.aredruss.qurio.models
+package com.aredruss.qurio.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

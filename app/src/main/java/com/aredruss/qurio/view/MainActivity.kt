@@ -1,9 +1,10 @@
-package com.aredruss.qurio
+package com.aredruss.qurio.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.aredruss.qurio.R
 import com.aredruss.qurio.databinding.ActivityMainBinding
 import com.aredruss.qurio.view.utils.viewBinding
 
