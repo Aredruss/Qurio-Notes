@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         tools:layout="@layout/fragment_home"
-        android:name="com.aredruss.qurio.view.notes.HomeFragment"
+        android:name="com.aredruss.qurio.view.home.HomeFragment"
         android:label="HomeFragment">
         <action
             android:id="@+id/home_to_note"

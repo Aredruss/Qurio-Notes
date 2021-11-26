@@ -1,9 +1,10 @@
-package com.aredruss.qurio.view.notes
+package com.aredruss.qurio.view.home
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.aredruss.qurio.R
 import com.aredruss.qurio.databinding.FragmentHomeBinding
 import com.aredruss.qurio.model.Note
@@ -15,7 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding: FragmentHomeBinding by viewBinding(FragmentHomeBinding::bind)
-    private val noteViewModel: NoteViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by viewModel()
     lateinit var adapter: NoteAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -24,13 +25,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.apply {
             notesRv.adapter = adapter
+            notesRv.layoutManager = LinearLayoutManager(requireContext())
 
             createFab.setOnClickListener {
                 navigateToNote(null)
             }
         }
 
-        noteViewModel.notesStateLD.observe(viewLifecycleOwner) { state ->
+        homeViewModel.notesListStateLD.observe(viewLifecycleOwner) { state ->
             state?.loading?.consume()?.let {
 
             }

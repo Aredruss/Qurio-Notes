@@ -1,4 +1,4 @@
-package com.aredruss.qurio.view.notes
+package com.aredruss.qurio.view.home
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -21,7 +21,6 @@ class NoteAdapter(
         holder.bind(currentList[position])
     }
 }
-
 
 class Differ : DiffUtil.ItemCallback<Note>() {
 

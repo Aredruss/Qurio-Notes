@@ -10,7 +10,7 @@ import com.aredruss.qurio.model.Note
 @Dao
 interface NoteDao {
     @Insert
-    suspend fun insertNote(note: Note)
+    suspend fun insertNote(note: Note): Long
 
     @Update
     suspend fun updateNote(note: Note)
@@ -20,4 +20,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM ${Note.TABLE_NAME}")
     suspend fun getNotes(): List<Note>
+
+    @Query("SELECT * FROM ${Note.TABLE_NAME} WHERE id =:id LIMIT 1")
+    suspend fun getNoteById(id: Int): Note
 }

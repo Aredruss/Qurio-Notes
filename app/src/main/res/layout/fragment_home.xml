@@ -16,13 +16,15 @@
         tools:layout_editor_absoluteX="16dp"
         tools:listitem="@layout/item_note" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/create_fab"
         android:layout_width="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@drawable/bg_rounded"
+        android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/black"
+        android:src="@drawable/ic_add"
         android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,9 @@
-package com.aredruss.qurio.view.notes
+package com.aredruss.qurio.view.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aredruss.qurio.domain.NoteRepo
+import com.aredruss.qurio.domain.NoteRepository
 import com.aredruss.qurio.model.Note
 import com.aredruss.qurio.view.utils.Event
 import com.aredruss.qurio.view.utils.update
@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class NoteViewModel(
-    private val noteRepo: NoteRepo
+class HomeViewModel(
+    private val noteRepo: NoteRepository
 ) : ViewModel() {
 
-    val notesStateLD = MutableLiveData(
-        NotesState(
+    val notesListStateLD = MutableLiveData(
+        NoteListState(
             loading = Event(true)
         )
     )
@@ -25,11 +25,11 @@ class NoteViewModel(
         loadNotes()
     }
 
-    fun loadNotes() = viewModelScope.launch {
-        notesStateLD.update { it.copy(loading = Event(true)) }
+    private fun loadNotes() = viewModelScope.launch {
+        notesListStateLD.update { it.copy(loading = Event(true)) }
         noteRepo.getNotes()
             .catch { error ->
-                notesStateLD.update {
+                notesListStateLD.update {
                     it.copy(
                         error = Event("$error"),
                         loading = Event(false)
@@ -37,7 +37,7 @@ class NoteViewModel(
                 }
             }
             .collect { notes ->
-                notesStateLD.update {
+                notesListStateLD.update {
                     it.copy(
                         userNotes = notes,
                         isEmpty = notes.isEmpty(),
@@ -48,7 +48,7 @@ class NoteViewModel(
     }
 }
 
-data class NotesState(
+data class NoteListState(
     val loading: Event<Boolean>? = null,
     val error: Event<String>? = null,
     val isEmpty: Boolean = false,

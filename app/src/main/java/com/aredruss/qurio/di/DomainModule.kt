@@ -1,9 +1,9 @@
 package com.aredruss.qurio.di
 
-import com.aredruss.qurio.domain.NoteRepo
+import com.aredruss.qurio.domain.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
 val domainModule = module {
-    single { NoteRepo(ioDispatcher = Dispatchers.IO, noteDao = get()) }
+    single { NoteRepository(ioDispatcher = Dispatchers.IO, noteDao = get()) }
 }

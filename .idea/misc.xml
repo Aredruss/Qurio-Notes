@@ -7,7 +7,7 @@
         <entry key="app/src/main/res/drawable/bg_rounded_ripple.xml" value="0.35648148148148145" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.39010416666666664" />
-        <entry key="app/src/main/res/layout/fragment_note.xml" value="0.39010416666666664" />
+        <entry key="app/src/main/res/layout/fragment_note.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_note.xml" value="0.33" />
       </map>
     </option>

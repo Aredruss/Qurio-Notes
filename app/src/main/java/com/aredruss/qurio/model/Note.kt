@@ -11,8 +11,8 @@ import java.util.*
 @Parcelize
 @Entity(tableName = Note.TABLE_NAME, indices = [Index(value = ["id"], unique = true)])
 data class Note(
-    @PrimaryKey
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int,
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "text")
