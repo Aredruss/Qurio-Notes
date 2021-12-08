@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aredruss.qurio.databinding.ItemNoteBinding
 import com.aredruss.qurio.model.Note
+import com.aredruss.qurio.view.utils.formatDate
 import com.aredruss.qurio.view.utils.viewBinding
 
 class NoteAdapter(
@@ -28,7 +29,7 @@ class Differ : DiffUtil.ItemCallback<Note>() {
         oldItem == newItem
 
     override fun areContentsTheSame(oldItem: Note, newItem: Note) =
-        oldItem.text == newItem.text
+        oldItem.id == newItem.id
 }
 
 data class NoteVh(
@@ -40,7 +41,7 @@ data class NoteVh(
     fun bind(note: Note) {
         binding.titleTv.text = note.name
         binding.bodyTv.text = note.text
-        binding.dateTv.text = note.date.toString()
+        binding.dateTv.text = note.date.formatDate()
 
         binding.root.setOnClickListener {
             clickAction(note)

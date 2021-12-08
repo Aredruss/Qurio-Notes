@@ -10,6 +10,7 @@ import com.aredruss.qurio.view.utils.update
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class HomeViewModel(
     private val noteRepo: NoteRepository
@@ -22,6 +23,7 @@ class HomeViewModel(
     )
 
     init {
+        Timber.e("Load notes")
         loadNotes()
     }
 

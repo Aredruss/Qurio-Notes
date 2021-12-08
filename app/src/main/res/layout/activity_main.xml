@@ -6,11 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/main_mtb"
+        app:navigationIconTint="@color/black"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/app_name"
+        app:titleCentered="true"
+        android:layout_height="?android:attr/actionBarSize"/>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_mtb"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:navGraph="@navigation/nav_graph" />

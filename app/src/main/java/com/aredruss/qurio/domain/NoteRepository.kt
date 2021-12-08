@@ -19,6 +19,6 @@ class NoteRepository(
 
     suspend fun getNoteById(id: Long) = noteDao.getNoteById(id.toInt())
 
-    fun getNotes() = flow { emit(noteDao.getNotes()) }.flowOn(ioDispatcher)
+    suspend fun getNotes() = noteDao.getNotes()
 
 }

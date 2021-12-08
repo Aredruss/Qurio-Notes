@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Qurio</string>
-    <string name="note_fr_title">Title</string>
-    <string name="note_fr_body">Got anything to say?</string>
+    <string name="note_fr_title">// Title</string>
+    <string name="note_fr_body">// Got anything to say?</string>
+    <string name="note_settings_delete_note">Delete note</string>
 </resources>
