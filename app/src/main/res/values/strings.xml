@@ -3,4 +3,6 @@
     <string name="note_fr_title">// Title</string>
     <string name="note_fr_body">// Got anything to say?</string>
     <string name="note_settings_delete_note">Delete note</string>
+    <string name="home_action_about">About</string>
+    <string name="home_action_settings">Settings</string>
 </resources>

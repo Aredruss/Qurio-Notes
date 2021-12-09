@@ -23,8 +23,11 @@ class HomeViewModel(
     )
 
     init {
-        Timber.e("Load notes")
         loadNotes()
+    }
+
+    fun deleteNote(note: Note) = viewModelScope.launch {
+        noteRepo.deleteNote(note)
     }
 
     private fun loadNotes() = viewModelScope.launch {

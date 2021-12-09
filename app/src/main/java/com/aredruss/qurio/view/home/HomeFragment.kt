@@ -1,6 +1,9 @@
 package com.aredruss.qurio.view.home
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -12,7 +15,7 @@ import com.aredruss.qurio.view.MainActivity
 import com.aredruss.qurio.view.utils.safeNavigate
 import com.aredruss.qurio.view.utils.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
+import timber.log.Timber
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -26,6 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         adapter = NoteAdapter(this::navigateToNote, this::deleteNote)
 
         activity?.actionBar?.setDisplayShowHomeEnabled(false)
+        setHasOptionsMenu(true)
 
         binding.apply {
 
@@ -56,11 +60,24 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_home, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_about -> {
+                findNavController().popBackStack()
+            }
+            R.id.action_settings -> {}
+            else -> findNavController().popBackStack()
+        }
+        return true
+    }
+
     private fun navigateToNote(note: Note?) {
         findNavController().safeNavigate(HomeFragmentDirections.homeToNote(note))
     }
 
-    private fun deleteNote(note: Note) {
-
-    }
+    private fun deleteNote(note: Note) = homeViewModel.deleteNote(note)
 }
