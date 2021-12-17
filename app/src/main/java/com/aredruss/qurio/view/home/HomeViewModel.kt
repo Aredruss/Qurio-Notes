@@ -10,7 +10,7 @@ import com.aredruss.qurio.view.utils.update
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import java.util.*
 
 class HomeViewModel(
     private val noteRepo: NoteRepository
@@ -44,7 +44,8 @@ class HomeViewModel(
             .collect { notes ->
                 notesListStateLD.update {
                     it.copy(
-                        userNotes = notes,
+                        userNotes = notes.sortedBy { it.date }.reversed()
+                            .groupBy { note -> note.date },
                         isEmpty = notes.isEmpty(),
                         loading = Event(false)
                     )
@@ -57,5 +58,5 @@ data class NoteListState(
     val loading: Event<Boolean>? = null,
     val error: Event<String>? = null,
     val isEmpty: Boolean = false,
-    val userNotes: List<Note> = emptyList()
+    val userNotes: Map<Date, List<Note>> = emptyMap()
 )

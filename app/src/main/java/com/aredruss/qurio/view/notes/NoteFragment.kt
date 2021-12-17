@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,14 +13,16 @@ import com.aredruss.qurio.R
 import com.aredruss.qurio.databinding.FragmentNoteBinding
 import com.aredruss.qurio.model.Note
 import com.aredruss.qurio.view.MainActivity
+import com.aredruss.qurio.view.utils.BaseFragment
 import com.aredruss.qurio.view.utils.formatDate
+import com.aredruss.qurio.view.utils.setSlideTransitions
 import com.aredruss.qurio.view.utils.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 import java.util.*
 
-class NoteFragment : Fragment(R.layout.fragment_note) {
+class NoteFragment : BaseFragment(R.layout.fragment_note) {
 
     private val binding: FragmentNoteBinding by viewBinding(FragmentNoteBinding::bind)
     private val editorViewModel: EditorViewModel by viewModel { parametersOf(args.note) }
@@ -28,10 +31,14 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+
+        activity?.onBackPressedDispatcher?.addCallback {
+            saveAndExit()
+        }
+
         args.note?.let {
             showNote(it)
         }
-
         observeState()
     }
 
@@ -46,7 +53,9 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
                 findNavController().popBackStack()
             }
             R.id.action_share -> Timber.i("onOptionsItemSelected - share")
-            else -> findNavController().popBackStack()
+            else -> {
+                saveAndExit()
+            }
         }
         return true
     }
@@ -67,18 +76,10 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
     private fun setSaveMode() = with(binding) {
         (requireActivity() as MainActivity).setToolbarTitle("Create")
         dateTv.text = Calendar.getInstance().time.formatDate()
-        saveBtn.setOnClickListener {
-            val input = getInput()
-            editorViewModel.createNote(input.first, input.second)
-        }
     }
 
-    private fun setEditMode() = with(binding) {
+    private fun setEditMode() {
         (requireActivity() as MainActivity).setToolbarTitle("Edit")
-        saveBtn.setOnClickListener {
-            val input = getInput()
-            editorViewModel.updateNote(input.first, input.second)
-        }
     }
 
     private fun showNote(note: Note) = with(binding) {
@@ -91,5 +92,24 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
         val title = (titleEt.text.toString()).ifEmpty { "Untitled" }
         val body = bodyEt.text.toString()
         return@with title to body
+    }
+
+    private fun saveAndExit() {
+        if (args.note == null) {
+            createFromInput()
+        } else {
+            updateFromInput()
+        }
+        findNavController().popBackStack()
+    }
+
+    private fun createFromInput() {
+        val input = getInput()
+        editorViewModel.createNote(input.first, input.second)
+    }
+
+    private fun updateFromInput() {
+        val input = getInput()
+        editorViewModel.updateNote(input.first, input.second)
     }
 }

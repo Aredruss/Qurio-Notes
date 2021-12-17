@@ -10,6 +10,8 @@
         <item name="android:navigationBarColor">@android:color/black</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
         <item name="fontFamily">@font/roboto_regular</item>
+        <item name="iconTint">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
 <!--        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>-->
     </style>
 
@@ -17,5 +19,11 @@
         parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="FloatingActionButton" parent="Widget.Design.FloatingActionButton">
+        <item name="backgroundTint">@color/black</item>
+        <item name="android:tint">@color/white</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
     </style>
 </resources>

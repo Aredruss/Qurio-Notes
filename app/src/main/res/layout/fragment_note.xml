@@ -2,26 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/title_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
-        android:background="@null"
-        android:hint="@string/note_fr_title"
-        android:paddingTop="10dp"
-        android:singleLine="true"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:placeholderText="@string/note_fr_title"
-        app:placeholderTextColor="@color/black" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/date_tv"
@@ -32,13 +15,32 @@
         android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@id/title_et"
-        app:layout_constraintTop_toBottomOf="@id/title_et"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="15/23/2021" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/title_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@null"
+        android:hint="@string/note_fr_title"
+        android:paddingTop="10dp"
+        android:singleLine="true"
+        android:maxLength="32"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date_tv"
+        app:placeholderText="@string/note_fr_title"
+        app:placeholderTextColor="@color/black" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/body_et"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
         android:background="@null"
@@ -50,25 +52,12 @@
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/save_btn"
+        android:layout_marginBottom="10dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date_tv"
+        app:layout_constraintTop_toBottomOf="@id/title_et"
         app:placeholderText="@string/note_fr_title"
         app:placeholderTextColor="@color/black" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/save_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/black"
-        android:text="Save"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:cornerRadius="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/body_et"
-        app:layout_constraintStart_toStartOf="@id/body_et" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

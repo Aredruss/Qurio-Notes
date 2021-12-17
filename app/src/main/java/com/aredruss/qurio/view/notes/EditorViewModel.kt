@@ -32,13 +32,16 @@ class EditorViewModel(
                     id = 0,
                     name = title.ifEmpty { "Untitled" },
                     text = text,
-                    date = Calendar.getInstance().time,
+                    date = Calendar.getInstance().apply {
+                        set(Calendar.HOUR_OF_DAY, 0)
+                        set(Calendar.MINUTE, 0)
+                        set(Calendar.SECOND, 0)
+                        set(Calendar.MILLISECOND, 0)
+                    }.time,
                 )
             )
         val note = noteRepo.getNoteById(resultId)
-        Timber.e("createNote failed: $resultId")
         noteState.update {
-            Timber.e("createNote failed: $note")
             it.copy(
                 isNewNote = false,
                 currentNote = note
@@ -48,7 +51,6 @@ class EditorViewModel(
 
     fun updateNote(title: String, text: String) = viewModelScope.launch {
         noteState.value?.currentNote?.let {
-            Timber.e("updateNote failed: $it")
             noteRepo.updateNote(it.copy(name = title, text = text))
         }
     }

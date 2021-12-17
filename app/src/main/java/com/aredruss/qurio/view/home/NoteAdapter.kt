@@ -1,35 +1,61 @@
 package com.aredruss.qurio.view.home
 
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.aredruss.qurio.databinding.ItemDateBinding
 import com.aredruss.qurio.databinding.ItemNoteBinding
 import com.aredruss.qurio.model.Note
 import com.aredruss.qurio.view.utils.formatDate
 import com.aredruss.qurio.view.utils.viewBinding
+import timber.log.Timber
+import java.util.*
 
 class NoteAdapter(
     private val clickAction: (Note) -> Unit,
     private val swipeAction: (Note) -> Unit
-) : ListAdapter<Note, NoteVh>(Differ()) {
+) : ListAdapter<Any, RecyclerView.ViewHolder>(Differ()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteVh {
-        return NoteVh(parent.viewBinding(ItemNoteBinding::inflate), clickAction, swipeAction)
+    @OptIn(ExperimentalStdlibApi::class)
+    fun submit(map: Map<Date, List<Note>>) {
+        Timber.e("submit, map: $map")
+        val entryList = buildList {
+            map.forEach { entry ->
+                add((entry.key))
+                addAll(entry.value)
+            }
+        }
+        submitList(entryList)
     }
 
-    override fun onBindViewHolder(holder: NoteVh, position: Int) {
-        holder.bind(currentList[position])
+    override fun getItemViewType(position: Int): Int {
+        return if (getItem(position) is Note) 1 else 0
+    }
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            1 -> NoteVh(parent.viewBinding(ItemNoteBinding::inflate), clickAction, swipeAction)
+            else -> DateVh(parent.viewBinding(ItemDateBinding::inflate))
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is NoteVh -> holder.bind(getItem(position) as Note)
+            is DateVh -> holder.bind(getItem(position) as Date)
+        }
     }
 }
 
-class Differ : DiffUtil.ItemCallback<Note>() {
+class Differ : DiffUtil.ItemCallback<Any>() {
 
-    override fun areItemsTheSame(oldItem: Note, newItem: Note) =
+    override fun areItemsTheSame(oldItem: Any, newItem: Any) =
         oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: Note, newItem: Note) =
-        oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: Any, newItem: Any) = true
 }
 
 data class NoteVh(
@@ -38,18 +64,25 @@ data class NoteVh(
     private val swipeAction: (Note) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(note: Note) {
-        binding.titleTv.text = note.name
-        binding.bodyTv.text = note.text
-        binding.dateTv.text = note.date.formatDate()
+    fun bind(note: Note) = with(binding) {
+        titleTv.text = note.name
+        bodyTv.isVisible = note.text.isNotEmpty()
+        bodyTv.text = note.text
 
-        binding.root.setOnClickListener {
+        Timber.e("bind failed: eweewew")
+
+        root.setOnClickListener {
             clickAction(note)
         }
-
-        binding.root.setOnLongClickListener {
+        root.setOnLongClickListener {
             swipeAction(note)
             true
         }
+    }
+}
+
+data class DateVh(private val binding: ItemDateBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(date: Date) = with(binding) {
+        dateTv.text = "[${date.formatDate()}]"
     }
 }
