@@ -8,7 +8,6 @@ import com.aredruss.qurio.model.Note
 import com.aredruss.qurio.view.utils.Event
 import com.aredruss.qurio.view.utils.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.*
 
 class EditorViewModel(
@@ -32,12 +31,7 @@ class EditorViewModel(
                     id = 0,
                     name = title.ifEmpty { "Untitled" },
                     text = text,
-                    date = Calendar.getInstance().apply {
-                        set(Calendar.HOUR_OF_DAY, 0)
-                        set(Calendar.MINUTE, 0)
-                        set(Calendar.SECOND, 0)
-                        set(Calendar.MILLISECOND, 0)
-                    }.time,
+                    date = getClearDate()
                 )
             )
         val note = noteRepo.getNoteById(resultId)
@@ -51,7 +45,7 @@ class EditorViewModel(
 
     fun updateNote(title: String, text: String) = viewModelScope.launch {
         noteState.value?.currentNote?.let {
-            noteRepo.updateNote(it.copy(name = title, text = text))
+            noteRepo.updateNote(it.copy(name = title, text = text, date = getClearDate()))
         }
     }
 
@@ -60,6 +54,13 @@ class EditorViewModel(
             noteRepo.deleteNote(it)
         }
     }
+
+    private fun getClearDate() = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }.time
 }
 
 data class NoteState(

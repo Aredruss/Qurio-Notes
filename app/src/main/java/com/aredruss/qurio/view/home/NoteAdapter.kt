@@ -20,7 +20,6 @@ class NoteAdapter(
 
     @OptIn(ExperimentalStdlibApi::class)
     fun submit(map: Map<Date, List<Note>>) {
-        Timber.e("submit, map: $map")
         val entryList = buildList {
             map.forEach { entry ->
                 add((entry.key))
@@ -68,9 +67,6 @@ data class NoteVh(
         titleTv.text = note.name
         bodyTv.isVisible = note.text.isNotEmpty()
         bodyTv.text = note.text
-
-        Timber.e("bind failed: eweewew")
-
         root.setOnClickListener {
             clickAction(note)
         }

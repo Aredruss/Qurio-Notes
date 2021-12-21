@@ -8,12 +8,12 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/main_mtb"
-        android:background="@color/black"
-        app:navigationIconTint="@color/white"
+        android:background="@color/statusBar"
+        app:navigationIconTint="@color/btnTintColor"
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
-        app:titleTextColor="@color/white"
+        app:titleTextColor="@color/btnTintColor"
         app:titleCentered="true"
         android:layout_height="?android:attr/actionBarSize"/>
 

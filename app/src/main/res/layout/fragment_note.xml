@@ -11,7 +11,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textColor="@color/black"
         android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@id/title_et"
@@ -35,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/date_tv"
         app:placeholderText="@string/note_fr_title"
-        app:placeholderTextColor="@color/black" />
+        app:placeholderTextColor="@color/secondaryText" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/body_et"
@@ -50,14 +49,13 @@
         android:paddingTop="5dp"
         android:scrollIndicators="right"
         android:scrollbarSize="3dp"
-        android:scrollbarThumbVertical="@color/black"
+        android:scrollbarThumbVertical="@color/colorAccent"
         android:textSize="16sp"
         android:layout_marginBottom="10dp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_et"
         app:placeholderText="@string/note_fr_title"
-        app:placeholderTextColor="@color/black" />
+        app:placeholderTextColor="@color/secondaryText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

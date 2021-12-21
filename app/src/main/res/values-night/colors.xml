@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#292929</color>
+    <color name="colorPrimaryDark">#202020</color>
+    <color name="colorPrimaryLight">#4A4A4A</color>
+    <color name="colorAccent">#009688</color>
+    <color name="mainText">#FFFFFF</color>
+    <color name="secondaryText">#B1B1B1</color>
+    <color name="mainIconTint">#FFFFFF</color>
+    <color name="barIconTint">#FFFFFF</color>
+    <color name="secondaryIconTint">#777777</color>
+    <color name="statusBar">#202020</color>
+    <color name="transparent">#00000000</color>
+    <color name="btnTintColor">#FFFFFF</color>
+    <color name="ripple">#131313</color>
+</resources>

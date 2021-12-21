@@ -6,10 +6,4 @@
         android:icon="@drawable/ic_info"
         android:title="@string/home_action_about"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/home_action_settings"
-        android:icon="@drawable/ic_settings"
-        app:showAsAction="never" />
 </menu>

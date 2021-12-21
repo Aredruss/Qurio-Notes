@@ -1,12 +1,12 @@
-#Qurio Notes
-##Qurio is a minimalistic note editor
+# Qurio Notes
+## A minimalistic note editor
 ---
-###About
+### About
 This project was created to explore my own UI/UX design capabilities.
 It offers clean and efficient functionality, and is designed to distract the user as little as possible.
 
 TO-DO:
-+Pagination
-+About, Settings, Share
-+Light & Dark theme
-+Filters and search functionality
++ Pagination
++ About, Settings, Share
++ Light & Dark theme
++ Filters and search functionality

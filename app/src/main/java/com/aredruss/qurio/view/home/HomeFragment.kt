@@ -58,10 +58,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_about -> {
-                findNavController().popBackStack()
+                findNavController().navigate(HomeFragmentDirections.homeToAbout())
             }
-            R.id.action_settings -> {}
-            else -> findNavController().popBackStack()
+            R.id.action_settings -> {
+
+            }
         }
         return true
     }

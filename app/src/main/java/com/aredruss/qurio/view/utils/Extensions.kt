@@ -1,13 +1,19 @@
 package com.aredruss.qurio.view.utils
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import timber.log.Timber
 import androidx.annotation.IdRes
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
+import com.aredruss.qurio.R
 import com.google.android.material.transition.MaterialSharedAxis
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -28,6 +34,40 @@ fun Fragment.setSlideTransitions() {
     exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
     reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
     returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+}
+
+fun DialogFragment.showSingle(fragmentManager: FragmentManager?, tag: String) {
+    if (fragmentManager == null) return
+    if (fragmentManager.findFragmentByTag(tag) == null) show(fragmentManager, tag)
+}
+
+fun Activity.openLink(url: String) {
+    val shareIntent = Intent().apply {
+        action = Intent.ACTION_VIEW
+        data = Uri.parse(url)
+    }
+    startActivity(
+        Intent.createChooser(shareIntent, getString(R.string.open_with))
+    )
+}
+
+fun Activity.composeEmail() {
+    val emailIntent = Intent().apply {
+        action = Intent.ACTION_SENDTO
+        data = Uri.parse("mailto:aredruss.dev@gmail.com?subject=Qurio")
+    }
+    startActivity(emailIntent)
+}
+
+fun Activity.shareLink(url: String) {
+    val shareIntent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, url)
+        type = "text/plain"
+    }
+    startActivity(
+        Intent.createChooser(shareIntent, getString(R.string.share_to))
+    )
 }
 
 private class ThreadSafeDateFormat(private val pattern: String) : ThreadLocal<DateFormat>() {

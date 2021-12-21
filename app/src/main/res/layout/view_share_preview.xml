@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/bg_rounded"
+    android:padding="10dp">
+
+    <View
+        android:id="@+id/v_close"
+        style="@style/DecorativeButton"
+        android:backgroundTint="@color/decorative_red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/v_hide"
+        style="@style/DecorativeButton"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="@color/decorative_yellow"
+        app:layout_constraintStart_toEndOf="@+id/v_close"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/v_open"
+        style="@style/DecorativeButton"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="@color/colorAccent"
+        app:layout_constraintStart_toEndOf="@id/v_hide"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/date_tv"
+        android:layout_width="0dp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@id/title_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="15/23/2021" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/date_tv"
+        app:layout_constraintTop_toBottomOf="@id/date_tv"
+        tools:text="Title" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/body_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/date_tv"
+        app:layout_constraintTop_toBottomOf="@id/title_tv"
+        tools:text="Body of a note containing" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
