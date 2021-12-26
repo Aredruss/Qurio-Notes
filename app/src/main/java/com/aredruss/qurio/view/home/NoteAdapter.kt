@@ -64,7 +64,7 @@ data class NoteVh(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(note: Note) = with(binding) {
-        titleTv.text = note.name
+        titleTv.text = note.title
         bodyTv.isVisible = note.text.isNotEmpty()
         bodyTv.text = note.text
         root.setOnClickListener {

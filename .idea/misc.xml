@@ -3,17 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_decorative_btn.xml" value="0.3953125" />
+        <entry key="app/src/main/res/drawable/bg_ripple.xml" value="0.3861111111111111" />
         <entry key="app/src/main/res/drawable/bg_rounded.xml" value="0.35648148148148145" />
         <entry key="app/src/main/res/drawable/bg_rounded_ripple.xml" value="0.35648148148148145" />
+        <entry key="app/src/main/res/drawable/bg_share_dialog.xml" value="0.3953125" />
+        <entry key="app/src/main/res/drawable/bg_transparent.xml" value="0.3861111111111111" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.3892307692307692" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.3892307692307692" />
+        <entry key="app/src/main/res/drawable/ic_email.xml" value="0.3861111111111111" />
+        <entry key="app/src/main/res/drawable/ic_github.xml" value="0.3861111111111111" />
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.275" />
+        <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.3861111111111111" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.3892307692307692" />
+        <entry key="app/src/main/res/drawable/ic_twitter.xml" value="0.3861111111111111" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
+        <entry key="app/src/main/res/layout/dialog_feedback.xml" value="0.37916666666666665" />
+        <entry key="app/src/main/res/layout/dialog_share.xml" value="0.37916666666666665" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.37916666666666665" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/fragment_note.xml" value="0.18" />
         <entry key="app/src/main/res/layout/item_date.xml" value="0.37916666666666665" />
         <entry key="app/src/main/res/layout/item_note.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/view_share_preview.xml" value="0.37916666666666665" />
         <entry key="app/src/main/res/menu/menu_home.xml" value="0.37916666666666665" />
         <entry key="app/src/main/res/menu/menu_note.xml" value="0.37916666666666665" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.275" />

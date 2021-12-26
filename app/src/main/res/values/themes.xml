@@ -47,13 +47,9 @@
         <item name="android:background">@color/transparent</item>
     </style>
 
-    <style name="DialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
-
     <style name="DecorativeButton">
-        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_width">12dp</item>
         <item name="android:background">@drawable/bg_decorative_btn</item>
-        <item name="android:layout_height">15dp</item>
+        <item name="android:layout_height">12dp</item>
     </style>
 </resources>

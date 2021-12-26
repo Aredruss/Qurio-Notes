@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.aredruss.qurio.domain.NoteRepository
 import com.aredruss.qurio.model.Note
 import com.aredruss.qurio.view.utils.Event
+import com.aredruss.qurio.view.utils.getClearDate
 import com.aredruss.qurio.view.utils.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.*
 
 class EditorViewModel(
@@ -25,27 +27,25 @@ class EditorViewModel(
     )
 
     fun createNote(title: String, text: String) = viewModelScope.launch {
-        val resultId =
-            noteRepo.insertNote(
-                Note(
-                    id = 0,
-                    name = title.ifEmpty { "Untitled" },
-                    text = text,
-                    date = getClearDate()
-                )
-            )
+        val newNote = Note(
+            id = 0,
+            title = title.ifEmpty { "Untitled" },
+            text = text,
+            date = getClearDate()
+        )
+        val resultId = noteRepo.insertNote(newNote)
         val note = noteRepo.getNoteById(resultId)
-        noteState.update {
-            it.copy(
-                isNewNote = false,
-                currentNote = note
-            )
-        }
+        noteState.update { it.copy(isNewNote = false, currentNote = note) }
     }
 
     fun updateNote(title: String, text: String) = viewModelScope.launch {
         noteState.value?.currentNote?.let {
-            noteRepo.updateNote(it.copy(name = title, text = text, date = getClearDate()))
+            val updatedNote = it.copy(
+                title = title.ifEmpty { "Untitled" },
+                text = text,
+                date = getClearDate()
+            )
+            noteRepo.updateNote(updatedNote)
         }
     }
 
@@ -55,12 +55,8 @@ class EditorViewModel(
         }
     }
 
-    private fun getClearDate() = Calendar.getInstance().apply {
-        set(Calendar.HOUR_OF_DAY, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
-        set(Calendar.MILLISECOND, 0)
-    }.time
+    private fun getClearDate(): Date = Calendar.getInstance().getClearDate()
+
 }
 
 data class NoteState(
@@ -68,5 +64,6 @@ data class NoteState(
     val isChanged: Boolean = false,
     val isDeleted: Boolean = false,
     val currentNote: Note? = null,
+    val noteToShare: Event<Note>? = null,
     val error: Event<String>? = null
 )

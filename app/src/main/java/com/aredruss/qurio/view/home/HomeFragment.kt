@@ -60,9 +60,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             R.id.action_about -> {
                 findNavController().navigate(HomeFragmentDirections.homeToAbout())
             }
-            R.id.action_settings -> {
-
-            }
         }
         return true
     }

@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@drawable/bg_rounded"
-    android:padding="10dp">
+    android:minWidth="200dp"
+    android:background="@drawable/bg_share_dialog"
+    android:padding="20dp">
 
     <View
         android:id="@+id/v_close"
@@ -33,25 +33,24 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/date_tv"
-        android:layout_width="0dp"
-        android:textStyle="bold"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="40dp"
         android:textSize="14sp"
+        android:textStyle="bold"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@id/title_tv"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="15/23/2021" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title_tv"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/date_tv"
         app:layout_constraintTop_toBottomOf="@id/date_tv"
         tools:text="Title" />
@@ -59,11 +58,10 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/body_tv"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/date_tv"
         app:layout_constraintTop_toBottomOf="@id/title_tv"
         tools:text="Body of a note containing" />

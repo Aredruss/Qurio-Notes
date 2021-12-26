@@ -6,20 +6,21 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.aredruss.qurio.R
 import com.aredruss.qurio.databinding.FragmentNoteBinding
+import com.aredruss.qurio.model.LiteNote
 import com.aredruss.qurio.model.Note
 import com.aredruss.qurio.view.MainActivity
+import com.aredruss.qurio.view.notes.ShareDialog.Companion.SHARE_DIALOG_TAG
 import com.aredruss.qurio.view.utils.BaseFragment
 import com.aredruss.qurio.view.utils.formatDate
-import com.aredruss.qurio.view.utils.setSlideTransitions
+import com.aredruss.qurio.view.utils.getClearDate
+import com.aredruss.qurio.view.utils.showSingle
 import com.aredruss.qurio.view.utils.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
 import java.util.*
 
 class NoteFragment : BaseFragment(R.layout.fragment_note) {
@@ -27,18 +28,19 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
     private val binding: FragmentNoteBinding by viewBinding(FragmentNoteBinding::bind)
     private val editorViewModel: EditorViewModel by viewModel { parametersOf(args.note) }
     private val args: NoteFragmentArgs by navArgs()
+    private val fragmentInput: Pair<String, String>
+        get() {
+            return getInput()
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        activity?.onBackPressedDispatcher?.addCallback {
-            saveAndExit()
-        }
+        args.note?.let { showNote(it) }
 
-        args.note?.let {
-            showNote(it)
-        }
+        activity?.onBackPressedDispatcher?.addCallback { findNavController().popBackStack() }
+
         observeState()
     }
 
@@ -52,10 +54,8 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
                 editorViewModel.deleteNote()
                 findNavController().popBackStack()
             }
-            R.id.action_share -> Timber.i("onOptionsItemSelected - share")
-            else -> {
-                saveAndExit()
-            }
+            R.id.action_share -> shareNote()
+            else -> saveAndExit()
         }
         return true
     }
@@ -83,7 +83,7 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
     }
 
     private fun showNote(note: Note) = with(binding) {
-        titleEt.setText(note.name)
+        titleEt.setText(note.title)
         bodyEt.setText(note.text)
         dateTv.text = note.date.formatDate()
     }
@@ -94,22 +94,37 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
         return@with title to body
     }
 
-    private fun saveAndExit() {
+    private fun writeNote() {
         if (args.note == null) {
             createFromInput()
         } else {
             updateFromInput()
         }
+    }
+
+    private fun saveAndExit() {
+        writeNote()
         findNavController().popBackStack()
     }
 
     private fun createFromInput() {
-        val input = getInput()
-        editorViewModel.createNote(input.first, input.second)
+        editorViewModel.createNote(fragmentInput.first, fragmentInput.second)
     }
 
     private fun updateFromInput() {
-        val input = getInput()
-        editorViewModel.updateNote(input.first, input.second)
+        editorViewModel.updateNote(fragmentInput.first, fragmentInput.second)
+    }
+
+    private fun shareNote() {
+        writeNote()
+        val note = LiteNote(
+            fragmentInput.first,
+            fragmentInput.second,
+            Calendar.getInstance().getClearDate().formatDate()
+        )
+        ShareDialog(note, this::shareImageNote).showSingle(
+            childFragmentManager,
+            SHARE_DIALOG_TAG
+        )
     }
 }

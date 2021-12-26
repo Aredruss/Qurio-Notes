@@ -13,4 +13,5 @@
     <color name="transparent">#00000000</color>
     <color name="btnTintColor">#FFFFFF</color>
     <color name="ripple">#131313</color>
+    <color name="dialog_bg">#454545</color>
 </resources>

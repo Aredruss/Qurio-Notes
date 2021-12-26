@@ -14,12 +14,12 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     @ColumnInfo(name = "name")
-    val name: String,
+    val title: String,
     @ColumnInfo(name = "text")
     val text: String,
     @ColumnInfo(name = "date")
     val date: Date
-): Parcelable {
+) : Parcelable {
     companion object {
         const val TABLE_NAME = "notes"
     }

@@ -8,25 +8,23 @@ import com.aredruss.qurio.R
 import com.aredruss.qurio.databinding.DialogFeedbackBinding
 import com.aredruss.qurio.view.utils.composeEmail
 import com.aredruss.qurio.view.utils.openLink
+import com.aredruss.qurio.view.utils.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class FeedbackDialog : BottomSheetDialogFragment() {
 
-    lateinit var binding: DialogFeedbackBinding
+    private val binding: DialogFeedbackBinding by viewBinding(DialogFeedbackBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.AppTheme_BottomDialog)
+        setStyle(STYLE_NO_TITLE, R.style.AppTheme_BottomDialog)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = DialogFeedbackBinding.inflate(LayoutInflater.from(context))
-        return binding.root
-    }
+    ): View  = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

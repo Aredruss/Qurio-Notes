@@ -1,12 +1,14 @@
 package com.aredruss.qurio.view.utils
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.view.inputmethod.EditorInfo
+import android.provider.MediaStore
 import android.widget.EditText
-import timber.log.Timber
 import androidx.annotation.IdRes
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -15,9 +17,16 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import com.aredruss.qurio.R
 import com.google.android.material.transition.MaterialSharedAxis
+import timber.log.Timber
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
+fun EditText.setFocusChangeListener(action: () -> Unit) {
+    this.setOnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) action()
+    }
+}
 
 fun NavController.safeNavigate(directions: NavDirections) =
     safeNavigate(directions.actionId, directions.arguments)
@@ -70,6 +79,12 @@ fun Activity.shareLink(url: String) {
     )
 }
 
+fun Activity.generateImageFromBitmap(bitmap: Bitmap, title: String) {
+    val path = MediaStore.Images.Media.insertImage(contentResolver, bitmap, title, null)
+    val uri = Uri.parse(path)
+
+}
+
 private class ThreadSafeDateFormat(private val pattern: String) : ThreadLocal<DateFormat>() {
     override fun initialValue(): DateFormat = SimpleDateFormat(pattern, Locale.ROOT)
 }
@@ -77,6 +92,13 @@ private class ThreadSafeDateFormat(private val pattern: String) : ThreadLocal<Da
 private val FORMAT_DATE: ThreadLocal<DateFormat> = ThreadSafeDateFormat("dd/MM/yyyy")
 
 private val FORMAT_TIME: ThreadLocal<DateFormat> = ThreadSafeDateFormat("HH:mm:ss")
+
+fun Calendar.getClearDate() = this.apply {
+    set(Calendar.HOUR_OF_DAY, 0)
+    set(Calendar.MINUTE, 0)
+    set(Calendar.SECOND, 0)
+    set(Calendar.MILLISECOND, 0)
+}.time
 
 fun Date.formatDate(): String = FORMAT_DATE.get()!!.format(this)
 

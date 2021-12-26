@@ -15,4 +15,5 @@
     <color name="ripple">#C5C5C5</color>
     <color name="decorative_red">#F44336</color>
     <color name="decorative_yellow">#FFC107</color>
+    <color name="dialog_bg">#DDDDDD</color>
 </resources>

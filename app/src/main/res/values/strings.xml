@@ -13,4 +13,5 @@
     <string name="about_github">Create an Issue</string>
     <string name="about_twitter">Tweet @ me</string>
     <string name="about_email">Send a letter</string>
+    <string name="share_export">Export</string>
 </resources>
