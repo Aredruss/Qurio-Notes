@@ -27,25 +27,31 @@ class EditorViewModel(
     )
 
     fun createNote(title: String, text: String) = viewModelScope.launch {
+        val currentNote = noteState.value?.currentNote
         val newNote = Note(
             id = 0,
             title = title.ifEmpty { "Untitled" },
             text = text,
             date = getClearDate()
         )
-        val resultId = noteRepo.insertNote(newNote)
-        val note = noteRepo.getNoteById(resultId)
-        noteState.update { it.copy(isNewNote = false, currentNote = note) }
+        if (newNote.text != currentNote?.text || newNote.title != currentNote.title) {
+            val resultId = noteRepo.insertNote(newNote)
+            val note = noteRepo.getNoteById(resultId)
+            noteState.update { it.copy(isNewNote = false, currentNote = note) }
+        }
     }
 
     fun updateNote(title: String, text: String) = viewModelScope.launch {
-        noteState.value?.currentNote?.let {
-            val updatedNote = it.copy(
-                title = title.ifEmpty { "Untitled" },
-                text = text,
-                date = getClearDate()
-            )
-            noteRepo.updateNote(updatedNote)
+        val currentNote = noteState.value?.currentNote
+        if (text != currentNote?.text || title != currentNote.title) {
+            noteState.value?.currentNote?.let {
+                val updatedNote = it.copy(
+                    title = title.ifEmpty { "Untitled" },
+                    text = text,
+                    date = getClearDate()
+                )
+                noteRepo.updateNote(updatedNote)
+            }
         }
     }
 

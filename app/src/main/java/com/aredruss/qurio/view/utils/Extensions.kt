@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.widget.EditText
 import androidx.annotation.IdRes
@@ -18,6 +19,10 @@ import androidx.navigation.NavDirections
 import com.aredruss.qurio.R
 import com.google.android.material.transition.MaterialSharedAxis
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,10 +84,27 @@ fun Activity.shareLink(url: String) {
     )
 }
 
-fun Activity.generateImageFromBitmap(bitmap: Bitmap, title: String) {
-    val path = MediaStore.Images.Media.insertImage(contentResolver, bitmap, title, null)
-    val uri = Uri.parse(path)
+fun Activity.generateImageFromBitmap(bitmap: Bitmap, title: String): Uri {
+    //create a file to write bitmap data
+    var file: File? = null
+    return try {
+        file = File(Environment.getExternalStorageDirectory().toString() + File.separator + title)
+        file.createNewFile()
+        //Convert bitmap to byte array
+        val bos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
+        val bitmapdata = bos.toByteArray()
 
+        //write the bytes in file
+        val fos = FileOutputStream(file)
+        fos.write(bitmapdata)
+        fos.flush()
+        fos.close()
+        Uri.fromFile(file)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        throw Exception("Failed to create File")// it will return null
+    }
 }
 
 private class ThreadSafeDateFormat(private val pattern: String) : ThreadLocal<DateFormat>() {

@@ -1,7 +1,9 @@
 package com.aredruss.qurio.view
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         navController.addOnDestinationChangedListener(this)
+
+        checkPermissions()
     }
 
     fun setToolbarTitle(title: String) = with(binding) {
@@ -37,4 +41,20 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     ) {
         supportActionBar?.setDisplayHomeAsUpEnabled(destination.id != R.id.homeFragment)
     }
+
+    private fun checkPermissions() {
+        val permissionToWrite = android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        val privileges = ActivityCompat.checkSelfPermission(
+            this,
+            permissionToWrite
+        )
+        if (privileges != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(permissionToWrite),
+                1
+            )
+        }
+    }
+
 }
