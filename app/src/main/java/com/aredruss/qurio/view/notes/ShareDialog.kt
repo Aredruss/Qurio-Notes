@@ -37,6 +37,6 @@ class ShareDialog(
     }
 
     companion object {
-        val SHARE_DIALOG_TAG = "share"
+        const val SHARE_DIALOG_TAG = "share"
     }
 }

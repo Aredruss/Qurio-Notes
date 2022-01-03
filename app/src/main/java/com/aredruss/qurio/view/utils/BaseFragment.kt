@@ -17,11 +17,19 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
 
     protected fun shareImageNote(note: Bitmap) {
         try {
-            val uri = requireActivity().generateImageFromBitmap(note, "note")
+            val uri = requireActivity().convertBitmapToUri(note)
+            Timber.e(uri?.path)
             val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "image/jpeg"
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(uri.path))
-            startActivity(Intent.createChooser(intent, "Share Note"))
+            uri?.let {
+                try {
+                    intent.type = "image/jpeg"
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(it.path))
+                    startActivity(Intent.createChooser(intent, "Share Note"))
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
+            }
+
         } catch (e: Exception) {
             Toast.makeText(
                 requireContext(),
