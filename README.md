@@ -9,14 +9,14 @@ It offers clean and efficient functionality, and is designed to distract the use
 
 ## 	:city_sunrise: Day Mode 
 Home | Create a note | Edit a note | About | Share or save a note
---- | --- | --- |--- |--- 
+--- | --- | --- | --- | --- 
 ![](./assets/light_home.png) | ![](./assets/light_create.png) | ![](./assets/light_note.png) | ![](./assets/light_about.png) | ![](./assets/light_share.png)
 
 <br />
 
 ## :city_sunset: Dark mode
 Home | Create a note | Edit a note | About | Share or save a note
---- | --- | --- |--- |--- 
+--- | --- | --- | --- | --- 
 ![](./assets/dark_home.png) | ![](./assets/dark_create.png) | ![](./assets/dark_note.png) | ![](./assets/dark_about.png) | ![](./assets/dark_share.png)
 <br />
 
@@ -24,8 +24,8 @@ Home | Create a note | Edit a note | About | Share or save a note
 ## :building_construction: Built With 
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
 - [Koin](https://insert-koin.io/) - A smart Kotlin dependency injection librar  
-- [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous and more..
-- [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - Collection of libraries that help you design robust, testable, and maintainable apps.
+- [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous work and more..
+- [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - A collection of libraries that help you design robust, testable, and maintainable apps.
     - [Flow](https://kotlinlang.org/docs/reference/coroutines/flow.html) - A flow is an asynchronous version of a Sequence, a type of collection whose values are lazily produced.
     - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores UI-related data that isn't destroyed on UI changes.
     - [Room](https://developer.android.com/topic/libraries/architecture/room) - SQLite object mapping library.
