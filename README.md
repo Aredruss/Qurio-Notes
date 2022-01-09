@@ -1,8 +1,7 @@
 
 ![](./assets/banner_big.png)
 
-# Qurio Notes
-## A minimalistic notepad
+# Qurio Notes - A minimalistic notepad
 
 ## About
 This project was created to explore my own UI/UX design capabilities.
@@ -43,7 +42,7 @@ Home | Create a note | Edit a note | About | Share or save a note
     ├── domain              # Local Data Storage
     │   ├── database        # Database Instance and the Data Access Object for Room
     ├── model               # Model classes [Notes]
-    |-- repo                # Used to handle all data operations
+    ├── repo                # Used to handle all data operations
     ├── view                # Activity/Fragment View layer
     │   ├── about           # App's summary
     │   ├── home            # App's Home
