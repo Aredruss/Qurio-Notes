@@ -1,6 +1,6 @@
 package com.aredruss.qurio.di
 
-import com.aredruss.qurio.domain.NoteRepository
+import com.aredruss.qurio.repo.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 

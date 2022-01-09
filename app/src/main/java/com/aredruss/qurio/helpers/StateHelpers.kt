@@ -1,12 +1,11 @@
-package com.aredruss.qurio.view.utils
+package com.aredruss.qurio.helpers
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.MutableLiveData
 
 class Event<T>(private val content: T) {
-    private var consumed = false
 
-    fun peek(): T = content
+    private var consumed = false
 
     fun consume(): T? {
         return if (consumed) {

@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.aredruss.qurio.model.Note
 import kotlinx.coroutines.flow.Flow
+import java.util.*
 
 @Dao
 interface NoteDao {
@@ -21,6 +22,9 @@ interface NoteDao {
 
     @Query("SELECT * FROM ${Note.TABLE_NAME}")
     fun getNotes(): Flow<List<Note>>
+
+    @Query("SELECT * FROM ${Note.TABLE_NAME} WHERE date =:date")
+    fun getNotesByDate(date: Date): Flow<List<Note>>
 
     @Query("SELECT * FROM ${Note.TABLE_NAME} WHERE id =:id LIMIT 1")
     suspend fun getNoteById(id: Int): Note

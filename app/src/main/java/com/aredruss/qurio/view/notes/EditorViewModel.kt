@@ -3,13 +3,11 @@ package com.aredruss.qurio.view.notes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aredruss.qurio.domain.NoteRepository
+import com.aredruss.qurio.helpers.update
 import com.aredruss.qurio.model.Note
-import com.aredruss.qurio.view.utils.Event
+import com.aredruss.qurio.repo.NoteRepository
 import com.aredruss.qurio.view.utils.getClearDate
-import com.aredruss.qurio.view.utils.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.*
 
 class EditorViewModel(
@@ -21,8 +19,7 @@ class EditorViewModel(
         NoteState(
             isNewNote = note == null,
             isChanged = false,
-            currentNote = note,
-            error = null
+            currentNote = note
         )
     )
 
@@ -69,7 +66,5 @@ data class NoteState(
     val isNewNote: Boolean = false,
     val isChanged: Boolean = false,
     val isDeleted: Boolean = false,
-    val currentNote: Note? = null,
-    val noteToShare: Event<Note>? = null,
-    val error: Event<String>? = null
+    val currentNote: Note? = null
 )

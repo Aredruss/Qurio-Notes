@@ -13,11 +13,9 @@ import com.aredruss.qurio.databinding.FragmentNoteBinding
 import com.aredruss.qurio.model.LiteNote
 import com.aredruss.qurio.model.Note
 import com.aredruss.qurio.view.MainActivity
-import com.aredruss.qurio.view.notes.ShareDialog.Companion.SHARE_DIALOG_TAG
 import com.aredruss.qurio.view.utils.BaseFragment
 import com.aredruss.qurio.view.utils.formatDate
 import com.aredruss.qurio.view.utils.getClearDate
-import com.aredruss.qurio.view.utils.showSingle
 import com.aredruss.qurio.view.utils.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -54,7 +52,7 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
                 editorViewModel.deleteNote()
                 findNavController().popBackStack()
             }
-            R.id.action_share -> shareNote()
+            R.id.action_share -> openNoteShareDialog()
             else -> saveAndExit()
         }
         return true
@@ -115,16 +113,13 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
         editorViewModel.updateNote(fragmentInput.first, fragmentInput.second)
     }
 
-    private fun shareNote() {
+    private fun openNoteShareDialog() {
         writeNote()
         val note = LiteNote(
             fragmentInput.first,
             fragmentInput.second,
-            Calendar.getInstance().getClearDate().formatDate()
+            Calendar.getInstance().getClearDate().formatDate() ?: ""
         )
-        ShareDialog(note, this::shareImageNote).showSingle(
-            childFragmentManager,
-            SHARE_DIALOG_TAG
-        )
+        openShareDialog(note)
     }
 }

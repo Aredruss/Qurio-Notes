@@ -3,10 +3,10 @@ package com.aredruss.qurio.view.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aredruss.qurio.domain.NoteRepository
+import com.aredruss.qurio.helpers.Event
+import com.aredruss.qurio.helpers.update
 import com.aredruss.qurio.model.Note
-import com.aredruss.qurio.view.utils.Event
-import com.aredruss.qurio.view.utils.update
+import com.aredruss.qurio.repo.NoteRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class HomeViewModel(
 
     val notesListStateLD = MutableLiveData(
         NoteListState(
-            loading = Event(true)
+            loading = true
         )
     )
 
@@ -30,14 +30,14 @@ class HomeViewModel(
         noteRepo.deleteNote(note)
     }
 
-    private fun loadNotes() = viewModelScope.launch {
-        notesListStateLD.update { it.copy(loading = Event(true)) }
-        noteRepo.getNotes()
+    fun loadNotes(date: Date? = null) = viewModelScope.launch {
+        notesListStateLD.update { it.copy(loading = true) }
+        noteRepo.getNotes(date)
             .catch { error ->
                 notesListStateLD.update {
                     it.copy(
                         error = Event("$error"),
-                        loading = Event(false)
+                        loading = false
                     )
                 }
             }
@@ -47,7 +47,8 @@ class HomeViewModel(
                         userNotes = notes.sortedBy { it.date }.reversed()
                             .groupBy { note -> note.date },
                         isEmpty = notes.isEmpty(),
-                        loading = Event(false)
+                        isFiltered = date != null,
+                        loading = false
                     )
                 }
             }
@@ -55,8 +56,9 @@ class HomeViewModel(
 }
 
 data class NoteListState(
-    val loading: Event<Boolean>? = null,
+    val loading: Boolean = false,
     val error: Event<String>? = null,
     val isEmpty: Boolean = false,
+    val isFiltered: Boolean = false,
     val userNotes: Map<Date, List<Note>> = emptyMap()
 )

@@ -13,5 +13,9 @@
     <string name="about_github">Create an Issue</string>
     <string name="about_twitter">Tweet @ me</string>
     <string name="about_email">Send a letter</string>
-    <string name="share_export">Export</string>
+    <string name="share_export">Share</string>
+    <string name="share_save">Save</string>
+    <string name="note_settings_export">Export</string>
+    <string name="note_date">[%1$s]</string>
+    <string name="info_empty_msg">Looks like\nyou have no notes</string>
 </resources>

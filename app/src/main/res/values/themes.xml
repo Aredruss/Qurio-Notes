@@ -1,16 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
     <style name="Theme.Qurio" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="android:navigationBarColor">@android:color/black</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/statusBar</item>
         <item name="fontFamily">@font/roboto_regular</item>
-        <item name="android:actionOverflowButtonStyle">@style/OverflowButton</item>
         <item name="iconTint">@color/btnTintColor</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:textColor">@color/mainText</item>
         <item name="android:textColorSecondary">@color/secondaryText</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowButton</item>
+
     </style>
 
     <style name="OverflowButton" parent="@style/Widget.AppCompat.ActionButton.Overflow" >
@@ -18,8 +19,8 @@
     </style>
 
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerFamily">cut</item>
-        <item name="cornerSize">4dp</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">5dp</item>
     </style>
 
     <style name="FloatingActionButton" parent="Widget.Design.FloatingActionButton">
@@ -27,15 +28,23 @@
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
     </style>
 
-    <style name="FeedbackButton" parent="Widget.AppCompat.Button.Borderless">
+    <style name="FeedbackButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginEnd">10dp</item>
-        <item name="android:background">@drawable/bg_ripple</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:background">@drawable/bg_rounded_ripple</item>
         <item name="android:textAlignment">textStart</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:padding">5dp</item>
         <item name="android:drawablePadding">10dp</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="android:windowBackground">@drawable/bg_rounded</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
     <style name="AppTheme.BottomDialog" parent="Theme.Design.BottomSheetDialog">
@@ -52,4 +61,12 @@
         <item name="android:background">@drawable/bg_decorative_btn</item>
         <item name="android:layout_height">12dp</item>
     </style>
+
+    <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button">
+        <item name="iconTint">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="backgroundTint">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

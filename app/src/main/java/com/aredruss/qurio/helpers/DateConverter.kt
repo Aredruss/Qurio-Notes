@@ -1,8 +1,6 @@
 package com.aredruss.qurio.helpers
 
-import android.text.format.DateUtils
 import androidx.room.TypeConverter
-import java.time.LocalDateTime
 import java.util.*
 
 object DateConverter {

@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.aredruss.qurio.view.utils.formatDate
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -24,3 +25,5 @@ data class Note(
         const val TABLE_NAME = "notes"
     }
 }
+
+fun Note.toLiteNote() = LiteNote(title, text, date.formatDate() ?: "")

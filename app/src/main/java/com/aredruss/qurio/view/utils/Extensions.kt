@@ -2,6 +2,7 @@ package com.aredruss.qurio.view.utils
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -9,30 +10,27 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
-import android.widget.EditText
+import android.view.View
 import androidx.annotation.IdRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
+import androidx.viewbinding.ViewBinding
 import com.aredruss.qurio.R
+import com.aredruss.qurio.databinding.ViewInfoMessageBinding
+import com.aredruss.qurio.model.LiteNote
 import com.google.android.material.transition.MaterialSharedAxis
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
+import java.io.OutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-
-
-fun EditText.setFocusChangeListener(action: () -> Unit) {
-    this.setOnFocusChangeListener { _, hasFocus ->
-        if (!hasFocus) action()
-    }
-}
+import kotlin.random.Random
 
 fun NavController.safeNavigate(directions: NavDirections) =
     safeNavigate(directions.actionId, directions.arguments)
@@ -74,83 +72,51 @@ fun Activity.composeEmail() {
     startActivity(emailIntent)
 }
 
-fun Activity.shareLink(url: String) {
-    val shareIntent = Intent().apply {
+fun Activity.shareAsText(note: LiteNote) {
+    val intent = Intent().apply {
         action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, url)
         type = "text/plain"
+        putExtra(android.content.Intent.EXTRA_TEXT, "${note.title}\n${note.body}")
     }
-    startActivity(
-        Intent.createChooser(shareIntent, getString(R.string.share_to))
-    )
+    startActivity(intent)
 }
 
-//fun Activity.generateImageFromBitmap(bitmap: Bitmap, title: String): Uri {
-//    //create a file to write bitmap data
-//    return try {
-//
-//        Uri.fromFile(file)
-//    } catch (e: Exception) {
-//        e.printStackTrace()
-//        throw Exception("Failed to create File")// it will return null
-//    }
-//}
+fun Activity.saveAsImage(bitmap: Bitmap): Boolean {
+    val fileName = "note${Random.nextInt()}.jpg"
+    val uri: Uri?
+    var stream: OutputStream? = null
+    val image: File
+    val dir: String
 
-fun Activity.bitmapToUriConverter(mBitmap: Bitmap): Uri? {
-    var uri: Uri? = null
-    try {
-        val file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "to-share.png")
-        val stream = FileOutputStream(file)
-        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        stream.close()
-        uri = Uri.fromFile(file)
-    } catch (e: IOException) {
-        Timber.e("IOException while trying to write file for sharing: %s", e.message)
-    }
-    Timber.e(uri.toString())
-    return uri
-}
-
-fun Activity.convertBitmapToUri(bitmap: Bitmap): Uri? {
-    var uri: Uri? = null
-    try {
-        val fileName = "note.png"
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-        values.put(MediaStore.Images.Media.TITLE, fileName)
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-        values.put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            values.put(MediaStore.MediaColumns.IS_PENDING, 1)
-        } else {
-            val directory =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-            val file = File(directory, fileName)
-            Timber.e(file.absolutePath)
-            values.put(MediaStore.MediaColumns.DATA, file.absolutePath)
-        }
-        uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val contentValues = ContentValues()
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+        contentValues.put(MediaStore.Video.Media.IS_PENDING, 0)
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+        uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
         uri?.let {
-            contentResolver.openOutputStream(uri).use { output ->
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
-            }
+            stream = contentResolver.openOutputStream(it)
         }
-
-    } catch (e: Exception) {
-        Timber.e(e)
+    } else {
+        dir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/").path
+        image = File(dir, fileName)
+        stream = FileOutputStream(image)
     }
-    Log.e("wewerewr", "URI IS FUCKING AAAA $uri")
-    return uri
+    return stream?.let { output ->
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output).also {
+            output.flush()
+            output.close()
+        }
+    } ?: false
 }
-
 
 private class ThreadSafeDateFormat(private val pattern: String) : ThreadLocal<DateFormat>() {
     override fun initialValue(): DateFormat = SimpleDateFormat(pattern, Locale.ROOT)
 }
 
 private val FORMAT_DATE: ThreadLocal<DateFormat> = ThreadSafeDateFormat("dd/MM/yyyy")
-
-private val FORMAT_TIME: ThreadLocal<DateFormat> = ThreadSafeDateFormat("HH:mm:ss")
 
 fun Calendar.getClearDate() = this.apply {
     set(Calendar.HOUR_OF_DAY, 0)
@@ -159,6 +125,24 @@ fun Calendar.getClearDate() = this.apply {
     set(Calendar.MILLISECOND, 0)
 }.time
 
-fun Date.formatDate(): String = FORMAT_DATE.get()!!.format(this)
+fun Date.formatDate() = FORMAT_DATE.get()?.format(this)
 
-fun Date.formatTime(): String = FORMAT_TIME.get()!!.format(this)
+fun ViewBinding.getStringArgText(id: Int, value: String): String =
+    context().getString(id, value)
+
+fun ViewBinding.getString(id: Int): String = context().getString(id)
+
+fun ViewBinding.context(): Context = this.root.context
+
+fun ViewBinding.getDrawable(resId: Int) = AppCompatResources.getDrawable(context(), resId)
+
+fun ViewInfoMessageBinding.setData(iconId: Int, msgId: Int) {
+    iconIv.setImageDrawable(getDrawable(iconId))
+    messageTv.text = getString(msgId)
+}
+
+fun View.animateVisibility(isVisible: Boolean) {
+    this.animate().alpha(if (isVisible) 1f else 0f).apply {
+        duration = 250
+    }
+}

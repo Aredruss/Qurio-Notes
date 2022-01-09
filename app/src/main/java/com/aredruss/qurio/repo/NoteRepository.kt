@@ -1,10 +1,11 @@
-package com.aredruss.qurio.domain
+package com.aredruss.qurio.repo
 
 import com.aredruss.qurio.domain.database.NoteDao
 import com.aredruss.qurio.model.Note
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import java.util.*
 
 class NoteRepository(
     private val ioDispatcher: CoroutineDispatcher,
@@ -19,6 +20,10 @@ class NoteRepository(
 
     suspend fun getNoteById(id: Long) = noteDao.getNoteById(id.toInt())
 
-    suspend fun getNotes() = noteDao.getNotes()
-
+    fun getNotes(date: Date?): Flow<List<Note>> =
+        if (date != null) {
+            noteDao.getNotesByDate(date)
+        } else {
+            noteDao.getNotes()
+        }.flowOn(ioDispatcher)
 }

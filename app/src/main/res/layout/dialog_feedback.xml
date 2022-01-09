@@ -52,7 +52,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/transparent"
         android:drawableLeft="@drawable/ic_github"
         android:text="@string/about_github"
         app:layout_constraintTop_toBottomOf="@id/divider_v" />
@@ -63,7 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/transparent"
         android:drawableLeft="@drawable/ic_twitter"
         android:text="@string/about_twitter"
         app:layout_constraintTop_toBottomOf="@id/github_btn"
@@ -75,7 +73,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/transparent"
         android:drawableLeft="@drawable/ic_email"
         android:text="@string/about_email"
         app:layout_constraintTop_toBottomOf="@id/twitter_btn"
